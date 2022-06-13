@@ -31,12 +31,13 @@ import com.fox2code.mmm.compat.CompatActivity;
 import com.fox2code.mmm.utils.Http;
 import com.fox2code.mmm.utils.IntentHelper;
 
+import java.util.HashMap;
+
 /**
  * Per Androidacy repo implementation agreement, no request of this WebView shall be modified.
  */
 public class AndroidacyActivity extends CompatActivity {
     private static final String TAG = "AndroidacyActivity";
-    private static final String REFERRER = "utm_source=FoxMMM&utm_medium=app";
 
     static {
         if (BuildConfig.DEBUG) {
@@ -71,12 +72,11 @@ public class AndroidacyActivity extends CompatActivity {
             this.forceBackPressed();
             return;
         }
-        if (!url.endsWith(REFERRER) && (url.startsWith("https://www.androidacy.com/") ||
-                url.startsWith("https://api.androidacy.com/magisk/"))) {
+        if (!url.endsWith(AndroidacyUtil.REFERRER)) {
             if (url.lastIndexOf('/') < url.lastIndexOf('?')) {
-                url = url + '&' + REFERRER;
+                url = url + '&' + AndroidacyUtil.REFERRER;
             } else {
-                url = url + '?' + REFERRER;
+                url = url + '?' + AndroidacyUtil.REFERRER;
             }
         }
         boolean allowInstall = intent.getBooleanExtra(
@@ -192,7 +192,10 @@ public class AndroidacyActivity extends CompatActivity {
         this.webView.addJavascriptInterface(androidacyWebAPI =
                 new AndroidacyWebAPI(this, allowInstall), "mmm");
         if (compatLevel != 0) androidacyWebAPI.notifyCompatModeRaw(compatLevel);
-        this.webView.loadUrl(url);
+        HashMap<String, String> headers = new HashMap<>();
+        headers.put("Accept-Language", this.getResources()
+                .getConfiguration().locale.toLanguageTag());
+        this.webView.loadUrl(url, headers);
     }
 
     @Override
