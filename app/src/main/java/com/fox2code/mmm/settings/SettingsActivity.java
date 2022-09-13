@@ -23,7 +23,6 @@ import com.fox2code.mmm.BuildConfig;
 import com.fox2code.mmm.Constants;
 import com.fox2code.mmm.MainActivity;
 import com.fox2code.mmm.MainApplication;
-import com.fox2code.mmm.OverScrollManager;
 import com.fox2code.mmm.R;
 import com.fox2code.mmm.compat.CompatActivity;
 import com.fox2code.mmm.installer.InstallerInitializer;
@@ -31,7 +30,6 @@ import com.fox2code.mmm.repo.RepoData;
 import com.fox2code.mmm.repo.RepoManager;
 import com.fox2code.mmm.utils.Http;
 import com.fox2code.mmm.utils.IntentHelper;
-
 import com.fox2code.rosettax.LanguageActivity;
 import com.fox2code.rosettax.LanguageSwitcher;
 import com.mikepenz.aboutlibraries.LibsBuilder;
@@ -59,13 +57,14 @@ public class SettingsActivity extends CompatActivity implements LanguageActivity
     }
 
     @Override
+    @SuppressLint("InlinedApi")
     public void refreshRosettaX() {
         Intent mStartActivity = new Intent(this, MainActivity.class);
         mStartActivity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         int mPendingIntentId = 123456;
-        @SuppressLint("InlinedApi") PendingIntent mPendingIntent = PendingIntent.getActivity(this, mPendingIntentId,
+        PendingIntent mPendingIntent = PendingIntent.getActivity(this, mPendingIntentId,
                 mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE);
-        AlarmManager mgr = (AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
+        AlarmManager mgr = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
         mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
         System.exit(0); // Exit app process
     }
@@ -193,6 +192,12 @@ public class SettingsActivity extends CompatActivity implements LanguageActivity
                 IntentHelper.openUrl(p.getContext(), "https://t.me/Fox2Code_Chat");
                 return true;
             });
+            findPreference("pref_credits").setOnPreferenceClickListener(p -> {
+                devModeStep = 0;
+                IntentHelper.openMarkdown(p.getContext(), "https://raw.githubusercontent.com/DerGoogler/FoxMagiskModuleManager/master/CREDITS.md", getString(R.string.credits), "", false, false, 0, 0, 0);
+                openFragment(new RepoFragment(), R.string.manage_repos_pref);
+                return true;
+            });
             findPreference("pref_show_licenses").setOnPreferenceClickListener(p -> {
                 devModeStep = devModeStep == 1 ? 2 : 0;
                 openFragment(libsBuilder.supportFragment(), R.string.licenses);
@@ -201,7 +206,7 @@ public class SettingsActivity extends CompatActivity implements LanguageActivity
             findPreference("pref_pkg_info").setSummary(
                     BuildConfig.APPLICATION_ID + " v" +
                             BuildConfig.VERSION_NAME + " (" +
-                            BuildConfig.VERSION_CODE + ")");
+                            BuildConfig.VERSION_CODE + ")" + "\nLast build date: " + BuildConfig.BUILD_DATE);
         }
 
         private void openFragment(Fragment fragment, @StringRes int title) {

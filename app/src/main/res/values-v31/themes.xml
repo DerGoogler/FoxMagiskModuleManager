@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="Theme.MagiskModuleManager.Light" parent="Theme.Material3.DynamicColors.Light">
         <item name="android:statusBarColor">@color/status_bar_color</item>
@@ -27,10 +27,6 @@
         <item name="chipBackgroundColor">@color/system_accent2_700</item>
         <item name="chipStrokeWidth">0dp</item>
         <item name="chipIconTint">?attr/colorControlNormal</item>
-    </style>
-
-    <style name="ChipExpanderDesign">
-        <item name="cornerRadius">100dp</item>
     </style>
 
 

@@ -5,15 +5,12 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-import android.transition.AutoTransition;
-import android.transition.TransitionManager;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.ColorInt;
@@ -78,9 +75,8 @@ public final class ModuleViewAdapter extends RecyclerView.Adapter<ModuleViewAdap
         private final TextView titleText;
         private final TextView creditText;
         private final TextView descriptionText;
-        private final LinearLayout moduleOptionsHolderWrapper;
         private final HorizontalScrollView moduleOptionsHolder;
-        private final ImageButton chipExpander;
+        private final TextView moduleLayoutHelper;
         private final TextView updateText;
         private final Chip[] actionsButtons;
         private final ArrayList<ActionButtonType> actionButtonsTypes;
@@ -98,9 +94,8 @@ public final class ModuleViewAdapter extends RecyclerView.Adapter<ModuleViewAdap
             this.titleText = itemView.findViewById(R.id.title_text);
             this.creditText = itemView.findViewById(R.id.credit_text);
             this.descriptionText = itemView.findViewById(R.id.description_text);
-            this.moduleOptionsHolderWrapper = itemView.findViewById(R.id.module_options_holder_wrapper);
             this.moduleOptionsHolder = itemView.findViewById(R.id.module_options_holder);
-            this.chipExpander = itemView.findViewById(R.id.chip_expander);
+            this.moduleLayoutHelper = itemView.findViewById(R.id.module_layout_helper);
             this.updateText = itemView.findViewById(R.id.updated_text);
             this.actionsButtons = new Chip[6];
             this.actionsButtons[0] = itemView.findViewById(R.id.button_action1);
@@ -134,17 +129,6 @@ public final class ModuleViewAdapter extends RecyclerView.Adapter<ModuleViewAdap
                         this.switchMaterial.setChecked( // Reset to valid state if action failed
                                 (moduleInfo.flags & ModuleInfo.FLAG_MODULE_DISABLED) == 0);
                     }
-                }
-            });
-            this.chipExpander.setOnClickListener(view -> {
-                if (this.moduleOptionsHolderWrapper.getVisibility() == View.VISIBLE) {
-                    TransitionManager.beginDelayedTransition(cardView, new AutoTransition());
-                    this.moduleOptionsHolderWrapper.setVisibility(View.GONE);
-                    this.chipExpander.setImageResource(R.drawable.ic_baseline_expand_more_24);
-                } else {
-                    TransitionManager.beginDelayedTransition(cardView, new AutoTransition());
-                    this.moduleOptionsHolderWrapper.setVisibility(View.VISIBLE);
-                    this.chipExpander.setImageResource(R.drawable.ic_baseline_expand_less_24);
                 }
             });
             this.actionButtonsTypes = new ArrayList<>();
@@ -208,7 +192,8 @@ public final class ModuleViewAdapter extends RecyclerView.Adapter<ModuleViewAdap
                     this.switchMaterial.setVisibility(View.GONE);
                 }
                 this.creditText.setVisibility(View.VISIBLE);
-                this.chipExpander.setVisibility(View.VISIBLE);
+                this.moduleOptionsHolder.setVisibility(View.VISIBLE);
+                this.moduleLayoutHelper.setVisibility(View.VISIBLE);
                 this.descriptionText.setVisibility(View.VISIBLE);
 
                 ModuleInfo moduleInfo = moduleHolder.getMainModuleInfo();
@@ -279,7 +264,13 @@ public final class ModuleViewAdapter extends RecyclerView.Adapter<ModuleViewAdap
                     }
                 }
                 if (this.actionButtonsTypes.isEmpty()) {
-                    this.chipExpander.setVisibility(View.GONE);
+                    this.moduleOptionsHolder.setVisibility(View.GONE);
+                    this.moduleLayoutHelper.setVisibility(View.GONE);
+                } else if (this.actionButtonsTypes.size() > 2 || !hasUpdateText) {
+                    this.moduleLayoutHelper.setMinHeight(Math.max(CompatDisplay.dpToPixel(36F),
+                            this.moduleOptionsHolder.getHeight() - CompatDisplay.dpToPixel(14F)));
+                } else {
+                    this.moduleLayoutHelper.setMinHeight(CompatDisplay.dpToPixel(4F));
                 }
                 this.cardView.setClickable(false);
                 if (moduleHolder.isModuleHolder() &&
@@ -301,7 +292,8 @@ public final class ModuleViewAdapter extends RecyclerView.Adapter<ModuleViewAdap
                 }
                 this.switchMaterial.setVisibility(View.GONE);
                 this.creditText.setVisibility(View.GONE);
-                this.chipExpander.setVisibility(View.GONE);
+                this.moduleOptionsHolder.setVisibility(View.GONE);
+                this.moduleLayoutHelper.setVisibility(View.GONE);
                 this.descriptionText.setVisibility(View.GONE);
                 this.updateText.setVisibility(View.GONE);
                 this.titleText.setText(" ");

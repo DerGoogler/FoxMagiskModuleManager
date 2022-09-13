@@ -1,0 +1,68 @@
+# Fox's Magisk Module Manager
+
+People that helped the development of the Magisk module manager.
+
+> Some Contributors are anonymous.
+
+- [DerGoogler](https//github.com/DerGoogler)
+  - Language Selector
+  - Monet Theming
+  - Some other improvements
+- [androidacy-user](https//github.com/androidacy-user)
+  - Androidacy API
+  - Reworks & Rewrites
+- [Alprnn357](https//github.com/Alprnn357)
+  - Turkish translations
+- [ender-zhao](https//github.com/ender-zhao)
+  - Simplified Chinese translations
+- [xerta555](https//github.com/xerta555)
+  - French translations
+- [Daviteusz](https//github.com/Daviteusz)
+  - Polish translations
+- [cracky5322](https//github.com/cracky5322)
+  - Traditional Chinese translations
+- [ygorigor](https//github.com/ygorigor)
+  - Romanian translations
+- [VladWinner](https//github.com/VladWinner)
+  - Russian translations
+- [gilbsgilbs](https//github.com/gilbsgilbs)
+  - F-Droid build flavor
+  - Disclaimer about Androidacy using ads and trackers.
+- [comradekingu](https//github.com/comradekingu)
+  - Norwegian translations
+- [PhSnake78](https//github.com/PhSnake78)
+  - Czech trnaslations
+- [tugaia56](https//github.com/tugaia56)
+  - Italy translations
+- [Leshu7w7](https//github.com/Leshu7w7)
+  - Spanish translations
+- [daywalk3r666](https//github.com/daywalk3r666)
+  - German translations
+- [HuskyDG](https//github.com/HuskyDG)
+  - Vietnamese translations
+- [alex-sandro92](https//github.com/alex-sandro92)
+  - Italy translations
+- [Tha14](https//github.com/Tha14)
+  - Greek translations
+- [CDzungx](https//github.com/CDzungx)
+  - Vietnamese translation
+- [RealEthanPlayzDev](https//github.com/RealEthanPlayzDev)
+  - Indonesian translations
+- [Madis0](https//github.com/Madis0)
+  - Estonian translations
+- [S0FTMAN](https//github.com/S0FTMAN)
+  - Russian translations
+- [DanGLES3](https//github.com/DanGLES3)
+  - Portuguese translations
+- [TireX228](https//github.com/TireX228)
+  - Russian translations
+- [TheFatTurtle](https//github.com/TheFatTurtle)
+  - German translations
+- [mi007d](https//github.com/mi007d)
+  - Portuguese translations
+- [pokurt](https//github.com/pokurt)
+  - UI changes
+- [bege10](https//github.com/bege10)
+  - German translations
+- [lindwurm](https//github.com/lindwurm)
+  - Japanese translations
